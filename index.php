@@ -48,9 +48,21 @@
     //----------------------------------------------------//
     //METODOS PARA REALIZAR UM ////SELECT////   
     
-    
-    
-    
+//-1---PASSANDO PARAMETROS
+    //$cmd = $pdo->prepare("SELECT * FROM pessoa WHERE id = :i");
+    //$id = "3";
+    //$cmd->bindValue(":i",$id);
+    //$cmd->execute();
+    //$res = $cmd->fetch();  //QUANDO VEM UMA UNICA LINHA DO BANCO DE DADOS
+    //$res = $cmd->fetch(PDO::FETCH_ASSOC); //SOMENTE OS NOMES //QUANDO VEM UMA UNICA LINHA DO BANCO DE DADOS
+    //$res = $cmd->fetchALL(); //QUANDO VEM MAIS DE UMA LINHA DO BANCO DE DADOS
+    //echo "<pre>"; //SOMENTE PARA O PROGRAMADOR VIZUALIZAR
+    //print_r($res); //SOMENTE PARA O PROGRAMADOR VIZUALIZAR
+    //echo "</pre>"; //SOMENTE PARA O PROGRAMADOR VIZUALIZAR
+    //foreach($res as $key => $value){
+    //    echo $key.": ".$value."<br>";
+    //}
+        
     //----------------------------------------------------//
     
 
