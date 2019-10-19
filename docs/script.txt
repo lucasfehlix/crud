@@ -1,0 +1,12 @@
+--Para o projeto crud execute o script abaixo:
+
+create database php;
+
+use php;
+
+create table crud(
+id int auto_increment primary key,
+nome varchar(40),
+telefone varchar(15),
+email varchar(50)
+);
