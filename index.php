@@ -1,3 +1,7 @@
+<?php
+    require_once "classes/classe-pessoa.php";
+    $p = new Pessoa("php","localhost","root","");
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -19,6 +23,12 @@
             </form>
         </section>
         <section id="direita">
+            <?php
+                $dados = $p->buscarDados();
+                //echo "<pre>";
+                //var_dump($dados);
+                //echo "</pre>";
+            ?>
             <table>
                 <tr id="titulo">
                     <td>NOME</td>
