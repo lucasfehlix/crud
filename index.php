@@ -10,41 +10,79 @@
         <link rel="stylesheet" href="css/estilo.css">
     </head>
     <body>
+        <?php
+            if(isset($_POST['nome'])){
+                $nome = addslashes($_POST['nome']);
+                $telefone = addslashes($_POST['telefone']);
+                $email = addslashes($_POST['email']);
+                if (!empty($nome) && !empty($telefone) && !empty($email)){
+                    if(!$p->cadastrarPessoa($nome, $telefone, $email)){
+                        echo "Email já esta cadastrado!";
+                    }
+                }else {
+                    echo "Preencha todos os campos!";
+                }
+            }
+        ?>
+        <?php
+            if(isset($_GET['id_up'])){
+                $id_update = addslashes($_GET['id_up']);
+                $res = $p->buscarPessoa($id_update);
+            }
+        ?>
         <section id="esquerda">
-            <form action="">
+            <form method="POST">
                 <h2>CADASTRAR PESSOA</h2>
                 <LAbel for="nome">Nome</LAbel>
-                <input type="text" name="nome" id="nome">
+                <input type="text" name="nome" id="nome" value="<?php if(isset($res)){echo $res['nome'];}?>">
                 <LAbel for="telefone">Telefone</LAbel>
-                <input type="text" name="telefone" id="telefone">
-                <LAbel for="email">Email</LAbel>
-                <input type="text" name="email" id="email">
-                <input type="submit" value="Cadastrar">
+                <input type="text" name="telefone" id="telefone" value="<?php if(isset($res)){echo $res['telefone'];}?>">
+                <LAbel for="email">Email</LAbel> 
+                <input type="email" name="email" id="email" value="<?php if(isset($res)){echo $res['email'];}?>">
+                <input type="submit" value="<?php if(isset($res)){echo "Atualizar";}else{echo "Cadastrar";}?>">
             </form>
         </section>
         <section id="direita">
-            <?php
-                $dados = $p->buscarDados();
-                //echo "<pre>";
-                //var_dump($dados);
-                //echo "</pre>";
-            ?>
             <table>
                 <tr id="titulo">
                     <td>NOME</td>
                     <td>TELEFONE</td>
                     <td colspan="2">EMAIL</td>
                 </tr>
-                <tr>
-                    <td>Lucas</td>
-                    <td>88977776666</td>
-                    <td>lucas@gmail.com</td>
-                    <td>
-                        <a href="">Editar</a>
-                        <a href="">Excluir</a>
-                    </td>
-                </tr>
+            <?php
+                $dados = $p->buscarDados();
+                //echo "<pre>";
+                //var_dump($dados);
+                //echo "</pre>";
+                if(count($dados) > 0){
+                    for ($i=0; $i < count($dados); $i++) { 
+                        echo "<tr>";
+                        foreach ($dados[$i] as $k => $v) {
+                            if($k != "id"){
+                                echo "<td>".$v."</td>";
+                            }
+                        }
+                        ?>
+                        <td><a href="index.php?id_up=<?php echo $dados[$i]['id'];?>">Editar</a>
+                            <a href="index.php?id=<?php echo $dados[$i]['id'];?>">Excluir</a>
+                        </td>
+                        <?php
+                        echo "</tr>";
+                    }
+                }else {
+                    echo "Não há pessoas cadastradas!";
+                }
+            
+            ?>  
             </table>
         </section>
     </body>
 </html>
+
+<?php
+    if (isset($_GET['id'])) {
+        $id_pessoa = addslashes($_GET['id']);
+        $p->excluirPessoa($id_pessoa);
+        header("location: index.php");
+    }
+?>
