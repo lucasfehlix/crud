@@ -2,7 +2,7 @@
     Class Pessoa{
 
         private $pdo;
-
+        
         //6 funções
         //CONEXAO COM O BANCO DE DADOS
         public function __construct($dbname,$host,$dbUsuario,$dbSenha){
@@ -56,6 +56,7 @@
             $cmd->bindValue(":t",$telefone);
             $cmd->bindValue(":e",$email);
             $cmd->execute();
+            return true;
         }
     }
 ?>

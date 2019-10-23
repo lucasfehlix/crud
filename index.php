@@ -12,15 +12,45 @@
     <body>
         <?php
             if(isset($_POST['nome'])){
-                $nome = addslashes($_POST['nome']);
-                $telefone = addslashes($_POST['telefone']);
-                $email = addslashes($_POST['email']);
-                if (!empty($nome) && !empty($telefone) && !empty($email)){
-                    if(!$p->cadastrarPessoa($nome, $telefone, $email)){
-                        echo "Email já esta cadastrado!";
+                //--------EDITAR---------//
+                if(isset($_GET['id_up']) && !empty($_GET['id_up'])){
+                    $id_upd = addslashes($_GET['id_up']);
+                    $nome = addslashes($_POST['nome']);
+                    $telefone = addslashes($_POST['telefone']);
+                    $email = addslashes($_POST['email']);
+                    if (!empty($nome) && !empty($telefone) && !empty($email)){
+                        $p->atualizarPessoa($id_upd,$nome, $telefone, $email);
+                        header("location: index.php");
+                    }else {
+                        ?>
+                            <div class="aviso">
+                                <img src="img/aviso.png">
+                                <h4>Preencha todos os campos!</h4> 
+                            </div>
+                        <?php
                     }
+                //--------CADASTRAR---------//
                 }else {
-                    echo "Preencha todos os campos!";
+                    $nome = addslashes($_POST['nome']);
+                    $telefone = addslashes($_POST['telefone']);
+                    $email = addslashes($_POST['email']);
+                    if (!empty($nome) && !empty($telefone) && !empty($email)){
+                        if(!$p->cadastrarPessoa($nome, $telefone, $email)){
+                            ?>
+                                <div class="aviso">
+                                    <img src="img/aviso.png">
+                                    <h4>Email já esta cadastrado!</h4> 
+                                </div>
+                            <?php    
+                        }
+                    }else {
+                        ?>
+                            <div class="aviso">
+                                <img src="img/aviso.png">
+                                <h4>Preencha todos os campos!</h4> 
+                            </div>
+                        <?php
+                    }
                 }
             }
         ?>
@@ -70,11 +100,14 @@
                         echo "</tr>";
                     }
                 }else {
-                    echo "Não há pessoas cadastradas!";
-                }
-            
-            ?>  
+                ?>  
             </table>
+                <div class="aviso">
+                    <h4>Não há pessoas cadastradas!</h4> 
+                </div>
+            <?php
+                }
+            ?>
         </section>
     </body>
 </html>
