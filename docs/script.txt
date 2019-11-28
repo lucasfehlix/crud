@@ -1,8 +1,8 @@
 --Para o projeto crud execute o script abaixo:
 
-create database php;
+create database agenda;
 
-use php;
+use agenda;
 
 create table pessoa(
 id int auto_increment primary key,
